@@ -1,0 +1,28 @@
+# Configuration file with sensitive data
+config.py
+
+# Python cache files
+__pycache__/
+*.pyc
+
+# Environment files
+.env
+.venv
+env/
+venv/
+
+# Temporary files
+temp.jpg
+
+# Model files
+*.pt
+
+# Directories to ignore
+test_images/ 
+
+# System files
+.DS_Store 
+
+# IDE specific files
+.vscode/
+.idea/

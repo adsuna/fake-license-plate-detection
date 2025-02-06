@@ -1,0 +1,8 @@
+streamlit
+opencv-python
+pytesseract
+torch
+ultralytics
+mysql.connector
+google.generativeai
+Pillow 
