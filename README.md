@@ -1,6 +1,6 @@
-# Vehicle Recognition System
+# Fake License Plate Detection System
 
-A comprehensive system for vehicle detection and verification that can identify license plates, vehicle make, model, and color, while also verifying the information against a registered vehicle database.
+A system that can detect license plates, make, model and color and verify the information against a registered vehicle database to detect fake license plates.
 
 ## Features
 
