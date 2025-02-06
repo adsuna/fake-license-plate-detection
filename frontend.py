@@ -12,7 +12,7 @@ import mysql.connector
 from mysql.connector import Error
 from config import DB_CONFIG, MODEL_PATH
 
-torch.classes.__path__ = [os.path.join(torch.__path__[0], torch.classes.__file__)] 
+torch.classes.__path__ = [os.path.join(torch.__path__[0], torch.classes.__file__)]
 
 def load_model(model_path):
     """Load the trained YOLOv8 model for license plate detection."""
@@ -21,7 +21,7 @@ def load_model(model_path):
 def detect_license_plate(model, image):
     """Detect license plate using YOLOv8 model and extract text with OCR."""
     results = model(image)  # YOLOv8 inference
-    
+
     for result in results:
         boxes = result.boxes.xyxy  # Bounding box coordinates
         for box in boxes:
@@ -31,7 +31,7 @@ def detect_license_plate(model, image):
             text = pytesseract.image_to_string(gray, config='--psm 8')
             cleaned_text = re.sub(r'[^A-Za-z0-9]', '', text).upper()  # Remove special characters and convert to uppercase
             return cleaned_text
-    
+
     return "License plate not detected"
 
 def detect_vehicle_model_and_color(image_path):
@@ -63,7 +63,7 @@ def verify_vehicle_details(plate_number, make, model, color):
     try:
         cursor = connection.cursor(dictionary=True)
         query = """
-        SELECT * FROM vehicles 
+        SELECT * FROM vehicles
         WHERE license_plate = %s
         """
         cursor.execute(query, (plate_number,))
@@ -128,44 +128,44 @@ def get_state_from_plate(plate_number):
         'WB': 'West Bengal',
         '22': 'Bharat',
     }
-    
+
     if len(plate_number) >= 2:
         state_code = plate_number[:2]
         return state_codes.get(state_code, "Unknown State")
     return "State Code Invalid"
 
 def main():
-    st.title("Vehicle Recognition System")
+    st.title("Fake License Plate Recognition System")
     st.write("Upload an image to detect the license plate, car make, model, and color.")
-    
+
     uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "png", "jpeg"])
-    
+
     if uploaded_file is not None:
         file_bytes = np.asarray(bytearray(uploaded_file.read()), dtype=np.uint8)
         image = cv2.imdecode(file_bytes, cv2.IMREAD_COLOR)
         st.image(uploaded_file, caption="Uploaded Image", use_container_width=True)
-        
+
         model = load_model(MODEL_PATH)
-        
+
         with torch.no_grad():  # Prevent potential torch-related errors
             plate_number = detect_license_plate(model, image)
-        
+
         # Get and display state information
         state_name = get_state_from_plate(plate_number)
         st.write(f"**License Plate:** {plate_number}")
         st.write(f"**Registered State:** {state_name}")
-        
+
         image_path = "temp.jpg"
         cv2.imwrite(image_path, image)  # Save temp file for script compatibility
         vehicle_make, vehicle_model, vehicle_color = detect_vehicle_model_and_color(image_path)
-        
+
         st.write(f"**Vehicle Make:** {vehicle_make}")
         st.write(f"**Vehicle Model:** {vehicle_model}")
         st.write(f"**Vehicle Color:** {vehicle_color}")
-        
+
         # Verify against database
         is_verified, message = verify_vehicle_details(plate_number, vehicle_make, vehicle_model, vehicle_color)
-        
+
         if not is_verified:
             st.markdown(
                 f"""
