@@ -1,7 +1,14 @@
 #!/bin/bash
 
 # Create and activate virtual environment
-python3.10 -m venv venv
+if command -v python3.10 &> /dev/null; then
+    python3.10 -m venv venv
+else
+    echo "Error: Python 3.10 is not installed or not in PATH"
+    echo "Please install Python 3.10 before running this script"
+    exit 1
+fi
+
 source venv/bin/activate
 
 # Install required packages
