@@ -32,7 +32,6 @@ cd fake-license-plate-detection
 ```
 
 3. Configure the application:
-   - Copy `config.template.py` to `config.py` 
    - Update `config.py` with your:
      - MySQL database credentials
      - Google API key
@@ -54,7 +53,7 @@ CREATE TABLE vehicles (
 ```
 
 5. Download the model:
-   - Place your trained `license-plate-detector.pt` model from [here](https://drive.google.com/file/d/1XHyNdpZI8eTiea3tn_sVIXhWV9Ys0GR0/view?usp=sharing) and place itin the project root directory
+   - Place your trained `license-plate-detector.pt` model from [here](https://drive.google.com/file/d/1XHyNdpZI8eTiea3tn_sVIXhWV9Ys0GR0/view?usp=sharing) and place it in the project root directory
 
 ## Usage
 
@@ -70,19 +69,6 @@ streamlit run frontend.py
 
 3. Access the web interface at `http://localhost:8501`
 
-## Project Structure
-
-```
-vehicle-recognition-system/
-├── frontend.py           # Streamlit web interface
-├── main.py              # Core detection logic
-├── predict_make_model.py # Vehicle make/model detection
-├── config.template.py    # Configuration template
-├── config.py            # Actual configuration (git-ignored)
-├── setup.sh             # Setup script
-├── requirements.txt     # Python dependencies
-└── test_images/         # Directory for test images
-```
 
 ## Configuration
 
@@ -95,9 +81,3 @@ The `config.py` file contains sensitive information and should never be committe
 
 This project is licensed under the GPL 3.0 License - see the LICENSE file for details.
 
-## Acknowledgments
-
-- YOLOv8 for object detection
-- Google Gemini AI for vehicle identification
-- Tesseract OCR for text recognition
-- Streamlit for the web interface
